@@ -58,9 +58,9 @@ public class Student {
         System.out.println("我过时了");
     }
 
-    public void SayAop(String str) {
-        System.out.printf(str);
-        System.out.println();
+    public String SayAop(String str) {
+        System.out.println(str);
+        return "是哦";
     }
 
     /*@Override

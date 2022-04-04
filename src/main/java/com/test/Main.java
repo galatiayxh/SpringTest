@@ -16,6 +16,6 @@ public class Main {
 //        System.out.println(student);
 //        List list = student.getList();
 //        System.out.println(list.get(1) instanceof String);
-        student.Test();
+        student.SayAop("学生在说话");
     }
 }

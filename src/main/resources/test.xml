@@ -24,19 +24,30 @@
     <bean name="teacher" class="com.test.beans.Teacher" scope="prototype"/>
     <bean name="card" class="com.test.beans.Card" scope="prototype"/>
     <bean name="aopTest" class="com.test.aop.AopTest"/>
+    <bean name="aopAdvice" class="com.test.aop.AopAdvice"/>
 
     <aop:config>
         <!--        SayAop重载：*一个参数；。。任意参数；（*，*，string）；-->
-        <aop:aspect ref="aopTest">
+        <!--<aop:aspect ref="aopTest">
             <aop:pointcut id="sayAop" expression="execution(* com.test.beans.Student.SayAop(*))"/>
             <aop:after-returning method="after" pointcut-ref="sayAop"/>
             <aop:before method="before" pointcut-ref="sayAop"/>
-        </aop:aspect>
+        </aop:aspect>-->
 
-        <aop:aspect ref="aopTest">
+        <!--<aop:aspect ref="aopTest">
             <aop:pointcut id="testAop" expression="@annotation(Deprecated)"/>
             <aop:after-returning method="after" pointcut-ref="testAop"/>
             <aop:before method="before" pointcut-ref="testAop"/>
-        </aop:aspect>
+        </aop:aspect>-->
+        
+        <!--环绕方法-->
+        <!--<aop:aspect ref="aopTest">
+            <aop:pointcut id="testAop" expression="execution(* com.test.beans.Student.SayAop(*))"/>
+            <aop:around method="around" pointcut-ref="testAop"/>
+        </aop:aspect>-->
+
+        <!--接口实线AOP-->
+        <aop:pointcut id="testAop" expression="execution(* com.test.beans.Student.SayAop(*))"/>
+        <aop:advisor advice-ref="aopAdvice" pointcut-ref="testAop"></aop:advisor>
     </aop:config>
 </beans>
