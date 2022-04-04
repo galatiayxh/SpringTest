@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <bean name="student" class="com.test.beans.Student" autowire="byName">
+        <!--多构造函数时需要主动提供参数>-->
+        <constructor-arg name="name" value="黑狗"/>
+        <constructor-arg index="1" value="20"/>
+        <property name="name" value="旺财"/>
+        <!--    使用 autowire="byName" 通过name或者type查找到Card的bean；或者使用下行的 property name="card" ref="card"-->
+        <property name="card" ref="card"/>
+        <property name="list">
+            <list>
+                <value type="double">123.62</value>
+                <value type="java.lang.String">你好</value>
+                <value type="int">123</value>
+            </list>
+        </property>
+    </bean>
+    <bean name="teacher" class="com.test.beans.Teacher" scope="prototype"/>
+    <bean name="card" class="com.test.beans.Card" scope="prototype"/>
+    <bean name="aopTest" class="com.test.aop.AopTest"/>
+
+    <aop:config>
+        <!--        SayAop重载：*一个参数；。。任意参数；（*，*，string）；-->
+        <aop:aspect ref="aopTest">
+            <aop:pointcut id="sayAop" expression="execution(* com.test.beans.Student.SayAop(*))"/>
+            <aop:after-returning method="after" pointcut-ref="sayAop"/>
+            <aop:before method="before" pointcut-ref="sayAop"/>
+        </aop:aspect>
+
+        <aop:aspect ref="aopTest">
+            <aop:pointcut id="testAop" expression="@annotation(Deprecated)"/>
+            <aop:after-returning method="after" pointcut-ref="testAop"/>
+            <aop:before method="before" pointcut-ref="testAop"/>
+        </aop:aspect>
+    </aop:config>
+</beans>
